@@ -1,13 +1,26 @@
-# create RDS MySQL DB
-    resource "aws_db_instance" "main" {
-        engine = "mysql"
-        engine_version = "8.0"
-        instance_class = "db.t2.micro"
-        name = "my_db"
-        username = "testdb01"
-        password = "testdatabase1" # use vault to secure your password
-        allocated_storage = 20
-        parameter_group_name = "challenge-two-public-a"
-        skip_final_snapshot = true
+data "aws_secretsmanager_secret" "secrets" {
+  name = "WordPress_DB_Credentials"
+}
 
-    }
+data "aws_secretsmanager_secret_version" "current" {
+  secret_id = data.aws_secretsmanager_secret.secrets.id
+}
+
+data "aws_subnet" "data_a" {
+  filter {
+    name   = "tag:Name"
+    values = ["canary-vpc-data-a"]
+  }
+}
+
+data "aws_subnet" "data_b" {
+  filter {
+    name   = "tag:Name"
+    values = ["canary-vpc-data-b"]
+  }
+}
+
+
+# output "sensitive_example_hash" {
+#  value = jsondecode(nonsensitive(data.aws_secretsmanager_secret_version.current.secret_string))
+# }
