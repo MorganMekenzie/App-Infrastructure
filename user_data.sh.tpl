@@ -1,14 +1,17 @@
 #!/bin/bash
 
 #update the instance
-apt-get -y update
+sudo apt-get -y update
 #install latest version of WP-CLI
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
 #install the latest version of jq
-sudo apt-get install jq
+sudo apt-get install jq -y
+
+export AWS_DEFAULT_REGION="us-east-2"
+
 
 #getting the wp username and password for secret manager
 username=$(aws secretsmanager get-secret-value --secret-id WordPress_DB_Credentials --query SecretString --output text | jq ".wordpress_username")
@@ -40,7 +43,7 @@ cat <<EOT >> /var/www/challenge-week/wp-config.php
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'database_name_here' );
+define( 'DB_NAME', 'wordpress_db' );
 
 /** Database username */
 define( 'DB_USER', $username );
@@ -85,7 +88,7 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = 'wp_';
+\$table_prefix = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -115,3 +118,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
 EOT
+
+#restarting the appache
+service apache2 restart
