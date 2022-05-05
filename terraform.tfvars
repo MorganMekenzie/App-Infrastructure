@@ -1,6 +1,6 @@
 # ASSIGNING VALUE TO VARIABLES
 aws_owner_id                = "342623272824"
-aws_ami_name                = "amzn2-ami-kernel-5.10-hvm*"
+aws_ami_name                = "group4-wordpress-ami-5.10-hvm*"
 vpc_name                    = "canary-vpc"
 public_a_subnet_name        = "canary-vpc-public-a"
 private_a_subnet_name       = "canary-vpc-private-a"

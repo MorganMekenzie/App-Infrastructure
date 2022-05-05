@@ -1,5 +1,5 @@
 #DATA SOURCE FOR AMI
-data "aws_ami" "aws_basic_linux" {
+data "aws_ami" "wordpress_ami" {
   owners      = [var.aws_owner_id]
   most_recent = true
   filter {
@@ -29,4 +29,8 @@ data "aws_subnet" "private_b" {
     values = [var.private_b_subnet_name]
   }
 
+}
+
+data "aws_db_instance" "database" {
+    db_instance_identifier = "db_subnet_group"
 }
