@@ -1,11 +1,3 @@
-data "template_file" "blue_template" {
-  template = file("${path.module}/user_data.sh.tpl")
-  vars = {
-    db_hostname = data.aws_db_instance.database.address
-
-  }
-}
-
 resource "aws_launch_template" "blue_template" {
   name_prefix            = "blue_template"
   image_id               = data.aws_ami.wordpress_ami.id
@@ -14,7 +6,11 @@ resource "aws_launch_template" "blue_template" {
   iam_instance_profile {
     name = "wordpress_server_profile"
   }
-  user_data = base64encode(data.template_file.blue_template.rendered)
+  user_data = base64encode(templatefile("${path.module}/user_data.sh.tpl", {
+    db_hostname = data.aws_db_instance.database.address
+    }
+    )
+  )
 }
 
 resource "aws_autoscaling_group" "blue" {

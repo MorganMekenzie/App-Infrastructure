@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #update the instance
-yum update
+apt-get -y update
 #install latest version of WP-CLI
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
