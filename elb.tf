@@ -22,9 +22,6 @@ resource "aws_lb_listener" "http_listener" {
         arn = aws_lb_target_group.blue-target.arn
       }
 
-      target_group {
-        arn = aws_lb_target_group.green-target.arn
-      }
     }
   }
 }

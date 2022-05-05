@@ -32,5 +32,5 @@ data "aws_subnet" "private_b" {
 }
 
 data "aws_db_instance" "database" {
-    db_instance_identifier = "db_subnet_group"
+    db_instance_identifier = "terraform-20220429143326752900000001"
 }
