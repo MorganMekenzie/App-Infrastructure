@@ -3,9 +3,9 @@
 #update the instance
 sudo apt-get -y update
 #install latest version of WP-CLI
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-sudo mv wp-cli.phar /usr/local/bin/wp
+# curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+# chmod +x wp-cli.phar
+# sudo mv wp-cli.phar /usr/local/bin/wp
 
 #install the latest version of jq
 sudo apt-get install jq -y
